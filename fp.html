@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Global Styles */
+        body {
+            transition: background-color 0.3s ease, color 0.3s ease;
+            font-family: 'Arial', sans-serif;
+        }
+        .bg-light-theme {
+            background-color: #f4f7fa;
+            color: #000;
+        }
+        .bg-dark-theme {
+            background-color: #121212;
+            color: #ffffff;
+        }
+        .bg-high-contrast {
+            background-color: #000000;
+            color: #ffff00;
+        }
+        /* Navbar Styles */
+        .navbar {
+            transition: background-color 0.3s ease;
+        }
+        .navbar .navbar-brand {
+            font-weight: bold;
+            color: #0056b3;
+            text-decoration: none;
+        }
+        .navbar .navbar-brand:hover {
+            color: #003366;
+            text-decoration: underline;
+        }
+        .navbar-nav .nav-item .nav-link {
+            font-size: 1.1rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        .navbar-nav .nav-item .nav-link:hover {
+            color: #0056b3;
+        }
+        /* Card Styles */
+        .card {
+            height: 250px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        .card-body {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        /* Button Styles */
+        .theme-btn {
+            font-size: 14px;
+            padding: 8px 20px;
+            transition: background-color 0.3s ease;
+        }
+        .theme-btn:hover {
+            background-color: #0056b3;
+        }
+        .btn-info {
+            transition: background-color 0.3s ease;
+        }
+        .btn-info:hover {
+            background-color: #17a2b8;
+        }
+        /* TTS Button Styles */
+        #tts-btn, #tts-pause-resume {
+            border-radius: 50%;
+            padding: 10px 20px;
+            transition: transform 0.2s ease;
+        }
+        #tts-btn:hover, #tts-pause-resume:hover {
+            transform: scale(1.1);
+        }
+        /* Container */
+        .container {
+            padding-top: 20px;
+        }
+    </style>
+</head>
+<body class="bg-light-theme">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+        <div class="container-fluid">
+            <!-- No link for the logo to prevent going to the index page -->
+            <span class="navbar-brand">12thPass</span>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="fp.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/exam-info">Exam Info</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="ram2a.html">Mock Tests</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/application">Application Assistance</a>
+                    </li>
+                    <li class="nav-item">
+                        <!-- Link to the Scribe Page -->
+                        <a class="nav-link" href="scribe.html">Scribe</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- Font Size and TTS Controls -->
+    <div class="container my-4">
+        <div class="d-flex justify-content-between mb-3">
+            <div>
+                <label for="font-size" class="me-2">Adjust Font Size:</label>
+                <input type="range" id="font-size" min="14" max="24" value="16" aria-label="Adjust font size">
+            </div>
+            <div>
+                <button id="tts-btn" class="btn btn-secondary" aria-label="Listen to this page">🔊 Listen</button>
+                <button id="tts-pause-resume" class="btn btn-warning" aria-label="Pause/Resume">⏸️ Pause</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard Cards -->
+    <div class="container my-5">
+        <h2 class="text-center mb-4">Dashboard</h2>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h5 class="card-title">Learning Resources</h5>
+                        <p class="card-text">Get started with your learning path.</p>
+                        <a href="dummycheck.html" class="btn btn-primary">Start</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h5 class="card-title">Mock Tests</h5>
+                        <p class="card-text">Take practice tests to prepare for exams.</p>
+                        <a href="ram2a.html" class="btn btn-primary">Start Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h5 class="card-title">Application Assistance</h5>
+                        <p class="card-text">Get help with exam applications.</p>
+                        <a href="result.html" class="btn btn-primary">Get Assistance</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Theme Button -->
+    <div class="container my-4 text-center">
+        <button class="btn btn-info theme-btn" id="theme-toggle">Change Theme</button>
+    </div>
+    <div style="position: fixed; bottom: 20px; right: 20px; z-index: 1000;">
+        <a href="checker.html" 
+           style="display: flex; justify-content: center; align-items: center; 
+                  width: 60px; height: 60px; background-color: #60adff; 
+                  border-radius: 50%; color: #ffffff; text-decoration: none; 
+                  font-size: 24px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+                  transition: transform 0.2s ease;" 
+           title="Go to Checker">
+            🤖
+        </a>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Font Size Adjustment
+        const fontSizeSlider = document.getElementById('font-size');
+        fontSizeSlider.addEventListener('input', function () {
+            document.body.style.fontSize = `${fontSizeSlider.value}px`;
+        });
+
+        // Text-to-Speech (TTS)
+        const ttsButton = document.getElementById('tts-btn');
+        const pauseResumeButton = document.getElementById('tts-pause-resume');
+        let speechSynthesisUtterance;
+        let isPaused = false;
+
+        ttsButton.addEventListener('click', () => {
+            const textToRead = document.body.innerText;
+            speechSynthesisUtterance = new SpeechSynthesisUtterance(textToRead);
+            speechSynthesisUtterance.lang = 'en-US';
+            window.speechSynthesis.speak(speechSynthesisUtterance);
+        });
+
+        pauseResumeButton.addEventListener('click', () => {
+            if (isPaused) {
+                window.speechSynthesis.resume();
+                pauseResumeButton.textContent = "Pause";
+            } else {
+                window.speechSynthesis.pause();
+                pauseResumeButton.textContent = "Resume";
+            }
+            isPaused = !isPaused;
+        });
+
+        // Theme Toggle
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        themeToggleBtn.addEventListener('click', () => {
+            if (document.body.classList.contains('bg-light-theme')) {
+                document.body.classList.remove('bg-light-theme');
+                document.body.classList.add('bg-dark-theme');
+            } else if (document.body.classList.contains('bg-dark-theme')) {
+                document.body.classList.remove('bg-dark-theme');
+                document.body.classList.add('bg-high-contrast');
+            } else {
+                document.body.classList.remove('bg-high-contrast');
+                document.body.classList.add('bg-light-theme');
+            }
+        });
+    </script>
+</body>
+</html>
+

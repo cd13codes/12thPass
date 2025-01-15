@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Global Styles */
+        body {
+            transition: background-color 0.3s ease, color 0.3s ease;
+            font-family: 'Arial', sans-serif;
+        }
+        .bg-light-theme {
+            background-color: #f4f7fa;
+            color: #000;
+        }
+        .bg-dark-theme {
+            background-color: #121212;
+            color: #ffffff;
+        }
+        .bg-high-contrast {
+            background-color: #000000;
+            color: #ffff00;
+        }
+        /* Navbar Styles */
+        .navbar {
+            transition: background-color 0.3s ease;
+        }
+        .navbar .navbar-brand {
+            font-weight: bold;
+            color: #0056b3;
+            text-decoration: none;
+        }
+        .navbar .navbar-brand:hover {
+            color: #003366;
+            text-decoration: underline;
+        }
+        .navbar-nav .nav-item .nav-link {
+            font-size: 1.1rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        .navbar-nav .nav-item .nav-link:hover {
+            color: #0056b3;
+        }
+        /* Typography */
+        h2, .card-title {
+            font-family: 'Georgia', serif;
+            letter-spacing: 0.8px;
+        }
+        p {
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+        /* Card Styles */
+        .card {
+            height: 250px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        .card-body {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        /* Grid Layout */
+        .container-fluid {
+            padding: 20px;
+        }
+        .row {
+            gap: 20px;
+        }
+        /* Buttons */
+        .btn-primary, .btn-info {
+            border-radius: 20px;
+            font-weight: bold;
+        }
+        .btn-primary:hover, .btn-info:hover {
+            background-color: #004085;
+        }
+        /* Navbar Dropdown */
+        .dropdown-menu {
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        /* Tooltip and Popover */
+        .tooltip-inner {
+            background-color: #000;
+            color: #fff;
+            font-size: 14px;
+        }
+        .popover {
+            border: 2px solid #17a2b8;
+        }
+        /* Carousel */
+        .carousel-item img {
+            height: 300px;
+            object-fit: cover;
+        }
+        /* Chatbot Icon */
+        .chatbot-icon {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background-color: #17a2b8;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 30px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+        .chatbot-icon:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body class="bg-light-theme">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+        <div class="container-fluid">
+            <span class="navbar-brand">12thPass</span>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                            Features
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="learn.html">Learning Resources</a></li>
+                            <li><a class="dropdown-item" href="ram2a.html">Mock Tests</a></li>
+                            <li><a class="dropdown-item" href="/application">Application Assistance</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="scribe.html">Scribe</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Content Section -->
+    <div class="container-fluid my-5">
+        <h2 class="text-center mb-4">Dashboard</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h5 class="card-title">Learning Resources</h5>
+                        <p class="card-text">Get started with your learning path.</p>
+                        <a href="dummycheck.html" class="btn btn-primary">Start</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h5 class="card-title">Mock Tests</h5>
+                        <p class="card-text">Take practice tests to prepare for exams.</p>
+                        <a href="ram2a.html" class="btn btn-primary">Start Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h5 class="card-title">Application Assistance</h5>
+                        <p class="card-text">Get help with exam applications.</p>
+                        <a href="/application" class="btn btn-primary">Get Assistance</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Carousel Section -->
+    <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="https://via.placeholder.com/800x300" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="https://via.placeholder.com/800x300" class="d-block w-100" alt="...">
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        </button>
+    </div>
+
+    <!-- Chatbot Icon -->
+    <a href="checker.html" class="chatbot-icon" aria-label="Go to Checker Page">
+        🤖
+    </a>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

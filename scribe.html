@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scribe Hiring & Volunteering</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEJ04K4v2M8F2N5H6w6QKM7zV8y6AzPSm5I9ShfgNfE+IcPj4Vc7J+glg1Xg9" crossorigin="anonymous">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            padding-top: 50px;
+        }
+
+        h1 {
+            margin-bottom: 30px;
+            color: #4CAF50;
+            text-align: center;
+            font-size: 2.5rem;
+        }
+
+        .card {
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .card-body {
+            padding: 2rem;
+        }
+
+        .form-group label {
+            font-weight: bold;
+        }
+
+        .btn {
+            border-radius: 8px;
+            padding: 12px;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+        }
+
+        .btn-success {
+            background-color: #28a745;
+            border: none;
+        }
+
+        .btn-info {
+            background-color: #17a2b8;
+            border: none;
+        }
+
+        .form-control, .form-select {
+            border-radius: 8px;
+            padding: 12px;
+            width: 100%;
+            font-size: 1rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #343a40;
+            margin-bottom: 20px;
+        }
+
+        /* Accessibility mode */
+        .high-contrast {
+            background-color: #000;
+            color: #fff;
+        }
+
+        .larger-text {
+            font-size: 1.2rem;
+        }
+
+        /* Form Layout */
+        .row {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .form-column {
+            width: 48%; /* Ensures form fields are aligned side by side */
+            max-width: 600px;
+        }
+
+        .button-container {
+            margin-top: 20px;
+        }
+
+        /* Align form inputs vertically */
+        .form-column .form-group {
+            margin-bottom: 15px;
+        }
+
+        /* Accessibility buttons */
+        .accessibility-controls {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container mt-5">
+        <h1>Scribe Hiring & Volunteering</h1>
+
+        <div class="row">
+            <!-- Section 1: Volunteer to be a Scribe (Left Side) -->
+            <div class="form-column">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="section-title">Become a Volunteer Scribe</h4>
+                        <form id="scribeForm">
+                            <div class="form-group">
+                                <label for="volunteerName">Full Name</label>
+                                <input type="text" class="form-control" id="volunteerName" name="volunteerName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="volunteerEmail">Email</label>
+                                <input type="email" class="form-control" id="volunteerEmail" name="volunteerEmail" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="volunteerPhone">Phone Number</label>
+                                <input type="tel" class="form-control" id="volunteerPhone" name="volunteerPhone" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="volunteerLocation">Location (City)</label>
+                                <input type="text" class="form-control" id="volunteerLocation" name="volunteerLocation" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="volunteerExperience">Experience (Optional)</label>
+                                <textarea class="form-control" id="volunteerExperience" name="volunteerExperience" rows="4" placeholder="Share your experience if any"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-success">Submit as Scribe</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 2: Hire a Scribe (Right Side) -->
+            <div class="form-column">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="section-title">Hire a Scribe</h4>
+                        <form id="hireForm">
+                            <div class="form-group">
+                                <label for="hireName">Your Name</label>
+                                <input type="text" class="form-control" id="hireName" name="hireName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="hireEmail">Email</label>
+                                <input type="email" class="form-control" id="hireEmail" name="hireEmail" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="hirePhone">Phone Number</label>
+                                <input type="tel" class="form-control" id="hirePhone" name="hirePhone" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="scribeType">Select Scribe Type</label>
+                                <select class="form-control" id="scribeType" name="scribeType">
+                                    <option value="general">General Scribe</option>
+                                    <option value="medical">Medical Scribe</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="reasonForScribe">Reason for Scribe</label>
+                                <select class="form-control" id="reasonForScribe" name="reasonForScribe">
+                                    <option value="vision">Vision Impairment</option>
+                                    <option value="motor">Motor Impairment</option>
+                                    <option value="learning">Learning Disability</option>
+                                    <option value="hearing">Hearing Impairment</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Find a Scribe</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Accessibility buttons -->
+        <div class="accessibility-controls">
+            <button class="btn btn-info" onclick="toggleContrast()">Toggle Contrast</button>
+            <button class="btn btn-info" onclick="toggleTextSize()">Toggle Text Size</button>
+        </div>
+
+    </div>
+
+    <script>
+        // Handle form submissions here (you can connect these forms to a backend later)
+        document.getElementById("scribeForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            alert("Thank you for volunteering as a scribe!");
+            document.getElementById("scribeForm").reset(); // Reset the form
+        });
+
+        document.getElementById("hireForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            alert("We will connect you with a scribe soon.");
+            document.getElementById("hireForm").reset(); // Reset the form
+        });
+
+        // Accessibility functions
+        function toggleContrast() {
+            document.body.classList.toggle("high-contrast");
+        }
+
+        function toggleTextSize() {
+            document.body.classList.toggle("larger-text");
+        }
+    </script>
+
+</body>
+</html>

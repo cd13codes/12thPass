@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APPLICATION</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script>
+        // Function to ask if the user is disabled using speech synthesis
+        function askDisability() {
+            const speechSynthesis = window.speechSynthesis;
+            const utterance = new SpeechSynthesisUtterance("Are you disabled? Please say yes or no.");
+            utterance.voice = getIndianFemaleVoice();
+            utterance.onend = function() {
+                listenForResponse("disability");
+            };
+            speechSynthesis.speak(utterance);
+            showDialog("Are you disabled?", "disability");
+        }
+
+        // Function to get an Indian female voice
+        function getIndianFemaleVoice() {
+            const voices = window.speechSynthesis.getVoices();
+            return voices.find(voice => voice.lang.includes('en-IN') && voice.name.includes('Female')) || voices[0];
+        }
+
+        // Function to listen for the user's response using speech recognition
+        function listenForResponse(fieldId) {
+            const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+            recognition.lang = 'en-IN';
+            recognition.start();
+
+            recognition.onresult = function(event) {
+                const response = event.results[0][0].transcript.toLowerCase();
+                handleResponse(response, fieldId);
+            };
+
+            recognition.onerror = function(event) {
+                console.log("Error occurred in speech recognition: " + event.error);
+            };
+        }
+
+        // Handle the user's response to the voice command
+        function handleResponse(response, fieldId) {
+            const disabilityField = document.getElementById(fieldId);
+
+            const affirmativeResponses = ["yes", "yup", "yeah", "disabled", "correct", "right"];
+            const negativeResponses = ["no", "nope"];
+
+            if (affirmativeResponses.some(affirmative => response.includes(affirmative))) {
+                disabilityField.value = "Yes";  // Mark as Yes if disabled
+            } else if (negativeResponses.some(negative => response.includes(negative))) {
+                disabilityField.value = "No";  // Mark as No if not disabled
+            } else {
+                disabilityField.value = "No";  // Default to No
+            }
+            confirmFields(); // Confirm each field
+        }
+
+        // Function to confirm each field with voice prompts
+        function confirmFields() {
+            const fields = [
+                { id: 'name', label: 'Name' },
+                { id: 'dob', label: 'Date of Birth' },
+                { id: 'father_name', label: "Father's Name" },
+                { id: 'mother_name', label: "Mother's Name" },
+                { id: 'adhar_number', label: 'Aadhaar Number' },
+                { id: 'marks_card_number', label: '10th Marks Card Registration Number' },
+                { id: 'marks', label: '10th Marks scored' }
+            ];
+
+            let index = 0;
+
+            function askNextField() {
+                if (index < fields.length) {
+                    const field = fields[index];
+                    const fieldValue = document.getElementById(field.id).value;
+
+                    // Prompt using voice
+                    const utterance = new SpeechSynthesisUtterance(${field.label} is ${fieldValue}. Is that correct?);
+                    utterance.voice = getIndianFemaleVoice();
+                    utterance.onend = function() {
+                        listenForFieldResponse(field.id, field.label);
+                    };
+                    window.speechSynthesis.speak(utterance);
+
+                    // Prompt in dialog box
+                    showDialog(${field.label} is ${fieldValue}. Is that correct?, field.id);
+                }
+            }
+
+            function listenForFieldResponse(fieldId, fieldLabel) {
+                const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+                recognition.lang = 'en-IN';
+                recognition.start();
+
+                recognition.onresult = function(event) {
+                    const response = event.results[0][0].transcript.toLowerCase();
+                    if (response.includes("yes") || response.includes("correct")) {
+                        index++; // Move to next field
+                        askNextField();
+                    } else if (response.includes("no")) {
+                        spellOutField(fieldId, fieldLabel);
+                    } else {
+                        const utterance = new SpeechSynthesisUtterance("I didn't understand. Please say yes, no, or correct.");
+                        utterance.voice = getIndianFemaleVoice();
+                        window.speechSynthesis.speak(utterance);
+                        listenForFieldResponse(fieldId, fieldLabel);
+                    }
+                };
+
+                recognition.onerror = function(event) {
+                    console.log("Error occurred in speech recognition: " + event.error);
+                    const utterance = new SpeechSynthesisUtterance("There was an error. Please try again.");
+                    utterance.voice = getIndianFemaleVoice();
+                    window.speechSynthesis.speak(utterance);
+                    listenForFieldResponse(fieldId, fieldLabel);
+                };
+            }
+
+            function spellOutField(fieldId, fieldLabel) {
+                const utterance = new SpeechSynthesisUtterance(Please spell out the ${fieldLabel} letter by letter.);
+                utterance.voice = getIndianFemaleVoice();
+                utterance.onend = function() {
+                    listenForSpelling(fieldId, fieldLabel, "");
+                };
+                window.speechSynthesis.speak(utterance);
+            }
+
+            function listenForSpelling(fieldId, fieldLabel, currentSpelling) {
+                const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+                recognition.lang = 'en-IN';
+                recognition.start();
+
+                recognition.onresult = function(event) {
+                    const response = event.results[0][0].transcript.toLowerCase();
+                    if (response === "done") {
+                        document.getElementById(fieldId).value = currentSpelling;
+                        index++; // Move to the next field
+                        askNextField();
+                    } else {
+                        const updatedSpelling = currentSpelling + response;
+                        spellOutField(fieldId, fieldLabel, updatedSpelling);
+                    }
+                };
+
+                recognition.onerror = function(event) {
+                    console.log("Error occurred in speech recognition: " + event.error);
+                    const utterance = new SpeechSynthesisUtterance("There was an error. Please try again.");
+                    utterance.voice = getIndianFemaleVoice();
+                    window.speechSynthesis.speak(utterance);
+                    listenForSpelling(fieldId, fieldLabel, currentSpelling);
+                };
+            }
+
+            askNextField(); // Start the confirmation process
+        }
+
+        // Function to show a dialog box for deaf users
+        function showDialog(message, fieldId) {
+            const dialogBox = document.getElementById("dialogBox");
+            const dialogMessage = document.getElementById("dialogMessage");
+
+            dialogMessage.innerText = message;
+            dialogBox.dataset.fieldId = fieldId; // Attach the field ID to the dialog box
+            dialogBox.style.display = "block";
+        }
+
+        // Function to close the dialog box after the user confirms
+        function closeDialog(response) {
+            const dialogBox = document.getElementById("dialogBox");
+            const fieldId = dialogBox.dataset.fieldId;
+
+            if (response === "yes") {
+                index++; // Move to the next field
+                confirmFields();
+            } else {
+                const utterance = new SpeechSynthesisUtterance(Please correct the field manually.);
+                utterance.voice = getIndianFemaleVoice();
+                window.speechSynthesis.speak(utterance);
+            }
+
+            dialogBox.style.display = "none";
+        }
+
+        // Call the askDisability function when the page is loaded
+        window.onload = askDisability;
+    </script>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">APPLICATION</h1>
+        <form action="/upload" method="POST" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" class="form-control" id="name" name="name" value="{{ data['name'] }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="dob" class="form-label">DOB</label>
+                <input type="text" class="form-control" id="dob" name="dob" value="{{ data['dob'] }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="father_name" class="form-label">Father's Name</label>
+                <input type="text" class="form-control" id="father_name" name="father_name" value="{{ data['father_name'] }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="mother_name" class="form-label">Mother's Name</label>
+                <input type="text" class="form-control" id="mother_name" name="mother_name" value="{{ data['mother_name'] }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="adhar_number" class="form-label">Aadhaar Number</label>
+                <input type="text" class="form-control" id="adhar_number" name="adhar_number" value="{{ data['adhar_number'] }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="marks_card_number" class="form-label">10th Marks Card Registration Number</label>
+                <input type="text" class="form-control" id="marks_card_number" name="marks_card_number" value="{{ data['marks_card_number'] }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="marks" class="form-label">10th Marks scored</label>
+                <input type="text" class="form-control" id="marks" name="marks" value="{{ data['marks'] }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="raw_ocr_text" class="form-label">Raw OCR Text</label>
+                <textarea class="form-control" id="raw_ocr_text" name="raw_ocr_text" rows="10" readonly>{{ raw_ocr_text }}</textarea>
+            </div>
+            <div class="mb-3">
+                <label for="disability" class="form-label">Disability</label>
+                <input type="text" class="form-control" id="disability" name="disability" value="No" readonly>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+
+    <!-- Dialog box for deaf users -->
+    <div id="dialogBox" class="modal" tabindex="-1" role="dialog" style="display: none;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirmation</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="closeDialog('no')">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p id="dialogMessage">Message will appear here</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="closeDialog('yes')">Yes</button>
+                    <button type="button" class="btn btn-danger" onclick="closeDialog('no')">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Include Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
